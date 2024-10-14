@@ -2,7 +2,7 @@ name: Search for Resumes
 
 on:
   schedule:
-    - cron: '0 0 * * 0' # This schedules the job to run every Sunday at midnight UTC.
+    - cron: '0 0 * * *'  # Runs every day at midnight UTC
   workflow_dispatch: # Allows manual trigger of the workflow
 
 jobs:
