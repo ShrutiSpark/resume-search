@@ -21,7 +21,7 @@ jobs:
           # Use the GitHub API to search for files
           curl -s "https://api.github.com/search/code?q=$SEARCH_TERM+in:file+extension:$FILE_TYPE" \
           -H "Accept: application/vnd.github.v3+json" \
-          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" > results.json
+          -H "Authorization: ${{ secrets.GITHUB_TOKEN }}" > results.json
 
           # Save results to a file in the repository
           echo "Results saved to results.json"
