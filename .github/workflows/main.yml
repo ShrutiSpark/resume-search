@@ -1,0 +1,36 @@
+name: Search for Resumes
+
+on:
+  schedule:
+    - cron: '0 0 * * 0' # This schedules the job to run every Sunday at midnight UTC.
+  workflow_dispatch: # Allows manual trigger of the workflow
+
+jobs:
+  search-resumes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Search for Resumes
+        run: |
+          # Define your search term and file type
+          SEARCH_TERM="resume"
+          FILE_TYPE="pdf"
+
+          # Use the GitHub API to search for files
+          curl -s "https://api.github.com/search/code?q=$SEARCH_TERM+in:file+extension:$FILE_TYPE" \
+          -H "Accept: application/vnd.github.v3+json" \
+          -H "Authorization: token YOUR_GITHUB_PERSONAL_ACCESS_TOKEN" > results.json
+
+          # Save results to a file in the repository
+          echo "Results saved to results.json"
+          cp results.json ./results.json
+      
+      - name: Commit Results
+        run: |
+          git config --local user.name "GitHub Action"
+          git config --local user.email "action@github.com"
+          git add results.json
+          git commit -m "Add resume search results"
+          git push
