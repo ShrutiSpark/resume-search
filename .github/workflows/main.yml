@@ -37,4 +37,4 @@ jobs:
           git config --local user.email "action@github.com"
           git add results.json
           git commit -m "Add resume search results"
-          git push origin main
+          git push https://<ShrutiSpark>:${{ secrets.PAT_TOKEN }}@github.com/<your-username>/<resume-search>.git
