@@ -10,8 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
-              - name:Debug - Check GitHub Token
+        uses: actions/checkout@v3  # Ensure the correct version
+
+      - name: Debug - Check GitHub Token
         run: |
           echo "GitHub Token: ${{ secrets.GITHUB_TOKEN }}"
           echo "Starting resume search..."
@@ -25,17 +26,10 @@ jobs:
           # Use the GitHub API to search for files
           curl -s "https://api.github.com/search/code?q=$SEARCH_TERM+in:file+extension:$FILE_TYPE" \
           -H "Accept: application/vnd.github.v3+json" \
-          -H "Authorization: ${{ secrets.GITHUB_TOKEN }}" > results.json
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" > results.json
           
           echo "Results saved to results.json"
           cat results.json  # Output the results for debugging
-          git add results.json
-          git commit -m "Add search results"
-          git push origin main
-
-          # Save results to a file in the repository
-          echo "Results saved to results.json"
-          cp results.json ./results.json
       
       - name: Commit Results
         run: |
@@ -43,4 +37,4 @@ jobs:
           git config --local user.email "action@github.com"
           git add results.json
           git commit -m "Add resume search results"
-          git push
+          git push origin main
