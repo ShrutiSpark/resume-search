@@ -30,11 +30,17 @@ jobs:
           
           echo "Results saved to results.json"
           cat results.json  # Output the results for debugging
+
+          - name: Add timestamp to results
+          run: |
+    echo "Timestamp: $(date)" >> results.json
+
       
-      - name: Commit Results
+      - name:Commit Results
         run: |
           git config --local user.name "GitHub Action"
           git config --local user.email "action@github.com"
           git add results.json
           git commit -m "Add resume search results"
+          git commit --allow-empty -m "Add resume search results"
           git push origin main
