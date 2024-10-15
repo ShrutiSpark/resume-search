@@ -26,21 +26,19 @@ jobs:
           # Use the GitHub API to search for files
           curl -s "https://api.github.com/search/code?q=$SEARCH_TERM+in:file+extension:$FILE_TYPE" \
           -H "Accept: application/vnd.github.v3+json" \
-          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" > results.json
+          -H "Authorization: token ${{ secrets.PAT_TOKEN }}" > results.json
           
           echo "Results saved to results.json"
           cat results.json  # Output the results for debugging
 
-          - name: Add timestamp to results
-          run: |
-    echo "Timestamp: $(date)" >> results.json
-
+      - name: Add timestamp to results
+        run: |
+          echo "Timestamp: $(date)" >> results.json
       
-      - name:Commit Results
+      - name: Commit Results
         run: |
           git config --local user.name "GitHub Action"
           git config --local user.email "action@github.com"
           git add results.json
           git commit -m "Add resume search results"
-          git commit --allow-empty -m "Add resume search results"
           git push origin main
