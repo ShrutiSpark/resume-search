@@ -14,7 +14,7 @@ jobs:
 
       - name: Debug - Check GitHub Token
         run: |
-          echo "GitHub Token: ${{ secrets.GITHUB_TOKEN }}"
+          echo "PAT Token: ${{ secrets.PAT_TOKEN }}"
           echo "Starting resume search..."
       
       - name: Search for Resumes
@@ -37,4 +37,4 @@ jobs:
           git config --local user.email "action@github.com"
           git add results.json
           git commit -m "Add resume search results"
-          git push https://<ShrutiSpark>:${{ secrets.PAT_TOKEN }}@github.com/<your-username>/<resume-search>.git
+          git push origin main
